@@ -1,0 +1,137 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  overflow: hidden;
+  font-family: 'Lato', sans-serif;
+}
+
+.df {
+  display: flex;
+}
+
+.dn {
+  display: none;
+}
+
+.db {
+  display: block;
+}
+
+.container {
+  background: #470255;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 10px;
+}
+
+.todo-section {
+  gap: 15px;
+  width: 100%;
+  margin: 20px 0;
+  display: flex;
+  max-width: 500px;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid #fff;
+  border-radius: 15px 15px 0 0;
+  box-shadow: 0 5px 10px #1e0129;
+}
+
+.todo-title {
+  margin: 15px;
+  font-size: 1.7rem;
+}
+
+.todo-title::after {
+  content: '';
+  width: 50px;
+  display: block;
+  margin: 10px auto;
+  border-bottom: 2px solid #470255;
+}
+
+#todo-form {
+  min-width: 100%;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.input-group {
+  min-width: 100%;
+  padding: 12px 15px;
+  border: 1px solid transparent;
+}
+
+.input-group:focus-visible {
+  outline-color: #a60ae4;
+}
+
+.btn-submit {
+  position: absolute;
+  display: block;
+  right: 15px;
+  top: 8px;
+  border: none;
+  background: transparent;
+}
+
+.btn-submit img {
+  width: 100%;
+}
+
+.btn-submit:active {
+  transform: translateY(-2px);
+}
+
+.todo-items-gropu {
+  list-style: none;
+  min-width: 100%;
+}
+
+.todo-item {
+  width: 100%;
+  display: flex;
+  padding: 15px;
+  cursor: pointer;
+  column-gap: 10px;
+}
+
+.todo-item:nth-child(odd) {
+  background: #7a0492;
+}
+
+.todo-completed {
+  text-decoration: line-through;
+  color: #de8cff;
+}
+
+.btn-three-dot {
+  margin-left: auto;
+  background: inherit;
+  border: none;
+  cursor: move;
+}
+
+.btn-clear-all {
+  width: 100%;
+  padding: 15px 15px;
+  text-align: center;
+  color: #a60ae4;
+  font-weight: bold;
+  margin-top: 10px;
+  border: none;
+  transition: all 0.05s ease-in-out;
+}
+
+.btn-clear-all:active {
+  color: #de8cff;
+}
