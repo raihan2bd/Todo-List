@@ -52,6 +52,7 @@ body {
     transform: translateY(-200%);
     opacity: 0.5;
   }
+
   100% {
     transform: translateY(0%);
     opacity: 1;
@@ -115,6 +116,7 @@ body {
   padding: 15px;
   cursor: pointer;
   column-gap: 10px;
+  align-items: center;
 }
 
 .todo-item:nth-child(odd) {
@@ -126,8 +128,11 @@ body {
   color: #de8cff;
 }
 
+.todo-des {
+  flex: 1;
+}
+
 .btn-three-dot {
-  margin-left: auto;
   background: inherit;
   border: none;
   cursor: move;
@@ -159,13 +164,37 @@ body {
 
 .form-error {
   display: block;
-  color: #ff5555;
+  color: #f55;
 }
 
 .invalid {
-  color: #ff0000;
+  color: #f00;
 }
 
 .invalid:focus-visible {
-  outline-color: #ff0000;
+  outline-color: #f00;
+}
+
+.todo-textarea {
+  flex: 1;
+  width: 100%;
+  background: transparent;
+  color: #fff;
+  padding: 10px;
+  cursor: text;
+  outline: none;
+  border: 1px solid #de8cff;
+  border-radius: 8px;
+  max-height: 40px;
+  resize: none;
+}
+
+.btn-delete {
+  background: transparent;
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.btn-delete:active {
+  border-color: #de8cff;
 }

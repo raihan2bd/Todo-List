@@ -1,13 +1,13 @@
-import { validateForm } from "./utils";
-import { todoContainer, formInput, showMsg } from "./domSelector";
+import validateForm from './utils.js';
+import { todoContainer, formInput, showMsg } from './domSelector.js';
 
 // Import necessary assets form source
 import threeDotIcon from '../assets/three-dot-24.png';
-
+import deleteIcon from '../assets/trash-24.png';
 
 export default class Todos {
   constructor() {
-    if(localStorage.getItem('todos')) {
+    if (localStorage.getItem('todos')) {
       this.todos = JSON.parse(localStorage.getItem('todos'));
     } else {
       this.todos = [];
@@ -15,7 +15,7 @@ export default class Todos {
   }
 
   sortAndSave = () => {
-    let todoArr = [...this.todos];
+    const todoArr = [...this.todos];
     // sorting the list
     todoArr.sort((a, b) => {
       if (a.index > b.index) {
@@ -29,8 +29,8 @@ export default class Todos {
     // rearrange the index
     let index = 0;
     todoArr.forEach((todo) => {
-    index += 1;
-    todo.index = index;
+      index += 1;
+      todo.index = index;
     });
 
     this.todos = [...todoArr];
@@ -39,44 +39,62 @@ export default class Todos {
 
   // Render todo list
   render = () => {
+    todoContainer.innerHTML = '';
     this.sortAndSave();
-    if(this.todos.length>0) {
-      let todoList = '';
+    if (this.todos.length > 0) {
       this.todos.forEach((todo) => {
-      todoList += `
-        <li class='todo-item' id='${todo.index}'>
-          <input type="checkbox" id="todo-compleate">
-          <p class="todo-des">
-            ${todo.description}
-          </p>
-          <button class="btn-three-dot"><img src="${threeDotIcon}" alt="..."></button>
-        </li>
-      `
-    });
+      // create todo item
+        const todoItem = document.createElement('li');
+        todoItem.id = todo.index;
+        todoItem.className = 'todo-item';
 
-    todoContainer.innerHTML = todoList;
+        // todo checkbox
+        const checkbox = document.createElement('input');
+        checkbox.setAttribute('type', 'checkbox');
+        checkbox.id = 'todo-compleate';
+
+        // todo description
+        const todoDes = document.createElement('p');
+        todoDes.className = 'todo-des';
+        todoDes.innerText = todo.description;
+
+        // Add event listner in todo Description
+        todoDes.addEventListener('click', (e) => {
+          this.onClickTodoDes(e);
+        });
+
+        // todo Three dot button
+        const threeDotButton = document.createElement('button');
+        threeDotButton.className = 'btn-three-dot';
+        threeDotButton.innerHTML = `<img src="${threeDotIcon}" alt="...">`;
+
+        // Append all the todo elements inside the todoItems
+        todoItem.append(checkbox, todoDes, threeDotButton);
+
+        // appent the todo item inside todoContainer
+        todoContainer.appendChild(todoItem);
+      });
     } else {
-      todoContainer.innerHTML = `<p class="no-item">There is no todo to show! Please add a new one.</p>`;
+      todoContainer.innerHTML = '<p class="no-item">There is no todo to show! Please add a new one.</p>';
     }
-    
   }
 
   // onSubmit method
-  onSubmit = (e) => {
+  onSubmit = () => {
     // Validate the form
     const description = formInput.value;
-    const required = true,
-    minLength = 3,
-    maxLength = 255,
-    specialChar = false;
-    let isValid = validateForm(description, required, minLength, maxLength, specialChar);
+    const required = true;
+    const minLength = 3;
+    const maxLength = 255;
+    const specialChar = false;
+    const isValid = validateForm(description, required, minLength, maxLength, specialChar);
 
     // Check if form has error or not
 
-    if(isValid.isError === true && isValid.msg.length>=0) {
+    if (isValid.isError === true && isValid.msg.length >= 0) {
       showMsg.classList.add('form-error');
       showMsg.textContent = isValid.msg;
-      formInput.classList.add('invalid')
+      formInput.classList.add('invalid');
     } else {
       // if form is empty add a new todo
       showMsg.classList.remove('form-error');
@@ -88,11 +106,46 @@ export default class Todos {
         description,
         completed: false,
         index,
-      }
+      };
       this.todos = [...this.todos, todo];
       // render the new todos on the dom
       this.render();
     }
   }
-    
+
+  delete = (index) => {
+    this.todos = this.todos.filter((t) => t.index.toString() !== index);
+    this.render();
+  }
+
+  // onClickDes enent method
+  onClickTodoDes = (e) => {
+    // target.outerHTML = document.createElement('textarea');
+    const parent = e.target.parentElement;
+    parent.innerHTML = '';
+
+    // todo checkbox
+    const checkbox = document.createElement('input');
+    checkbox.setAttribute('type', 'checkbox');
+    checkbox.id = 'todo-compleate';
+
+    // todo description
+    const todoTxtArea = document.createElement('textarea');
+    todoTxtArea.setAttribute('row', '1');
+    todoTxtArea.className = 'todo-textarea';
+    todoTxtArea.innerText = e.target.innerText;
+
+    // todo Delete dot button
+    const deleteTodo = document.createElement('button');
+    deleteTodo.className = 'btn-delete';
+    deleteTodo.innerHTML = `<img src="${deleteIcon}" alt="X">`;
+
+    // adding event on delete icon
+    deleteTodo.addEventListener('click', () => {
+      const index = parent.id;
+      this.delete(index);
+    });
+
+    parent.append(checkbox, todoTxtArea, deleteTodo);
+  }
 }
