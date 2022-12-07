@@ -6,7 +6,7 @@
 
 html,
 body {
-  overflow: hidden;
+  overflow-x: hidden;
   font-family: 'Lato', sans-serif;
 }
 
@@ -44,6 +44,18 @@ body {
   border: 1px solid #fff;
   border-radius: 15px 15px 0 0;
   box-shadow: 0 5px 10px #1e0129;
+  animation: slide-in 0.3s ease-in-out;
+}
+
+@keyframes slide-in {
+  0% {
+    transform: translateY(-200%);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
 }
 
 .todo-title {
@@ -134,4 +146,26 @@ body {
 
 .btn-clear-all:active {
   color: #de8cff;
+}
+
+.no-item {
+  text-align: center;
+  color: #a2ad06;
+}
+
+.show-msg {
+  display: none;
+}
+
+.form-error {
+  display: block;
+  color: #ff5555;
+}
+
+.invalid {
+  color: #ff0000;
+}
+
+.invalid:focus-visible {
+  outline-color: #ff0000;
 }
