@@ -1,4 +1,4 @@
-import validateForm from './utils.js';
+import { validateForm } from './utils.js';
 import { todoContainer, formInput, showMsg } from './domSelector.js';
 
 // Import necessary assets form source
@@ -50,6 +50,15 @@ export default class Todos {
         todoItem.id = todo.index;
         todoItem.className = 'todo-item';
         todoItem.setAttribute('draggable', true);
+
+        // drag and drop function;
+        todoItem.addEventListener('dragstart', () => {
+          todoItem.classList.add('dragging');
+        });
+
+        todoItem.addEventListener('dragend', () => {
+          todoItem.classList.remove('dragging');
+        });
 
         // todo checkbox
         const checkbox = document.createElement('input');

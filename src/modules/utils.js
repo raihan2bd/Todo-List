@@ -1,4 +1,4 @@
-const validateForm = (
+export const validateForm = (
   str, required = false, minLength = 0, maxLength = 0, specialChar = true,
 ) => {
   let isError = false;
@@ -42,4 +42,20 @@ const validateForm = (
   return { isError, msg };
 };
 
-export default validateForm;
+export const getAfterElement = (todoContainer, y) => {
+  const dragFilterElements = [...todoContainer.querySelectorAll('.todo-item:not(.dragging)')];
+
+  return dragFilterElements.reduce((nearest, item) => {
+    // get the box content
+    const box = item.getBoundingClientRect();
+
+    // calculate the offset
+    const offset = y - box.top - box.height / 2;
+    if(offset<0 && offset > nearest.offset) {
+      return {offset: offset, element: item}
+    } else {
+      return nearest
+    }
+  },{offset: Number.NEGATIVE_INFINITY}).element;
+
+}
