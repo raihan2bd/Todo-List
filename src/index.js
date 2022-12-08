@@ -27,7 +27,6 @@ formInput.addEventListener('keypress', (e) => {
 btnSubmit.addEventListener('click', (e) => {
   e.preventDefault();
   todos.onSubmit();
-  formInput.value = '';
 });
 
 // filter all completed list;
