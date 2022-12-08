@@ -64,17 +64,17 @@ export default class Todos {
         const checkbox = document.createElement('input');
         checkbox.setAttribute('type', 'checkbox');
         checkbox.id = 'todo-compleate';
-        
+
         checkbox.addEventListener('change', (e) => {
           this.onCompleate(e);
-        })
-        
+        });
+
         // todo description
         const todoDes = document.createElement('p');
         todoDes.className = 'todo-des';
         todoDes.innerText = todo.description;
-        
-        if(todo.completed) {
+
+        if (todo.completed) {
           checkbox.setAttribute('checked', 'yes');
           todoDes.classList.add('todo-compleated');
         }
@@ -85,7 +85,7 @@ export default class Todos {
         threeDotButton.innerHTML = `<img src="${threeDotIcon}" alt="...">`;
 
         // add event on three icon for edit and delete.
-        threeDotButton.addEventListener('click', (e) =>{
+        threeDotButton.addEventListener('click', (e) => {
           this.onClickTodoDes(e);
         });
 
@@ -180,7 +180,7 @@ export default class Todos {
 
     checkbox.addEventListener('change', (e) => {
       this.onCompleate(e);
-    })
+    });
 
     // todo description
     const todoEditInput = document.createElement('input');
@@ -217,18 +217,17 @@ export default class Todos {
   onCompleate = (e) => {
     const index = e.target.parentElement.id;
     const newArr = [...this.todos];
-      const indx = newArr.findIndex((item) => index === item.index.toString());
-      if (indx >= 0) {
-        newArr[indx].completed = !newArr[indx].completed;
-      }
-      this.todos = [...newArr];
-      this.render();
-      console.log(this.todos)
+    const indx = newArr.findIndex((item) => index === item.index.toString());
+    if (indx >= 0) {
+      newArr[indx].completed = !newArr[indx].completed;
+    }
+    this.todos = [...newArr];
+    this.render();
   }
 
   onFilterCompletedTodos = () => {
     let newArr = [...this.todos];
-    newArr = newArr.filter((item) => true !== item.completed);
+    newArr = newArr.filter((item) => item.completed !== true);
     this.todos = [...newArr];
     this.render();
   }

@@ -51,11 +51,9 @@ export const getAfterElement = (todoContainer, y) => {
 
     // calculate the offset
     const offset = y - box.top - box.height / 2;
-    if(offset<0 && offset > nearest.offset) {
-      return {offset: offset, element: item}
-    } else {
-      return nearest
+    if (offset < 0 && offset > nearest.offset) {
+      return { offset, element: item };
     }
-  },{offset: Number.NEGATIVE_INFINITY}).element;
-
-}
+    return nearest;
+  }, { offset: Number.NEGATIVE_INFINITY }).element;
+};
