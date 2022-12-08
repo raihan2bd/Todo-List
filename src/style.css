@@ -22,6 +22,7 @@ body {
   display: block;
 }
 
+/* Todo Section start from here */
 .container {
   background: #470255;
   color: #fff;
@@ -72,6 +73,7 @@ body {
   border-bottom: 2px solid #470255;
 }
 
+/* Add new todo form start form here */
 #todo-form {
   min-width: 100%;
   position: relative;
@@ -86,6 +88,15 @@ body {
 
 .input-group:focus-visible {
   outline-color: #a60ae4;
+}
+
+.invalid {
+  color: #f55;
+  border-color: #f55;
+}
+
+.invalid:focus-visible {
+  outline-color: #f55;
 }
 
 .btn-submit {
@@ -105,6 +116,7 @@ body {
   transform: translateY(-2px);
 }
 
+/* Todo Items styles start from here */
 .todo-items-gropu {
   list-style: none;
   min-width: 100%;
@@ -114,7 +126,7 @@ body {
   width: 100%;
   display: flex;
   padding: 15px;
-  cursor: pointer;
+  cursor: move;
   column-gap: 10px;
   align-items: center;
 }
@@ -128,6 +140,10 @@ body {
   color: #de8cff;
 }
 
+#todo-compleate {
+  cursor: pointer;
+}
+
 .todo-des {
   flex: 1;
 }
@@ -135,7 +151,7 @@ body {
 .btn-three-dot {
   background: inherit;
   border: none;
-  cursor: move;
+  cursor: pointer;
 }
 
 .btn-clear-all {
@@ -153,6 +169,7 @@ body {
   color: #de8cff;
 }
 
+/* Dinamic styles is start from here */
 .no-item {
   text-align: center;
   color: #a2ad06;
@@ -198,4 +215,9 @@ body {
 
 .invalid-edit:focus-visible {
   outline-color: #f55;
+}
+
+.todo-compleated {
+  text-decoration: line-through;
+  color: #de8cff;
 }

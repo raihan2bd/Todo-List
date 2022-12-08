@@ -1,4 +1,4 @@
-import validateForm from './utils.js';
+import { validateForm } from './utils.js';
 import { todoContainer, formInput, showMsg } from './domSelector.js';
 
 // Import necessary assets form source
@@ -49,26 +49,45 @@ export default class Todos {
         const todoItem = document.createElement('li');
         todoItem.id = todo.index;
         todoItem.className = 'todo-item';
+        todoItem.setAttribute('draggable', true);
+
+        // drag and drop function;
+        todoItem.addEventListener('dragstart', () => {
+          todoItem.classList.add('dragging');
+        });
+
+        todoItem.addEventListener('dragend', () => {
+          todoItem.classList.remove('dragging');
+        });
 
         // todo checkbox
         const checkbox = document.createElement('input');
         checkbox.setAttribute('type', 'checkbox');
         checkbox.id = 'todo-compleate';
 
+        checkbox.addEventListener('change', (e) => {
+          this.onCompleate(e);
+        });
+
         // todo description
         const todoDes = document.createElement('p');
         todoDes.className = 'todo-des';
         todoDes.innerText = todo.description;
 
-        // Add event listner in todo Description
-        todoDes.addEventListener('click', (e) => {
-          this.onClickTodoDes(e);
-        });
+        if (todo.completed) {
+          checkbox.setAttribute('checked', 'yes');
+          todoDes.classList.add('todo-compleated');
+        }
 
         // todo Three dot button
         const threeDotButton = document.createElement('button');
         threeDotButton.className = 'btn-three-dot';
         threeDotButton.innerHTML = `<img src="${threeDotIcon}" alt="...">`;
+
+        // add event on three icon for edit and delete.
+        threeDotButton.addEventListener('click', (e) => {
+          this.onClickTodoDes(e);
+        });
 
         // Append all the todo elements inside the todoItems
         todoItem.append(checkbox, todoDes, threeDotButton);
@@ -150,7 +169,8 @@ export default class Todos {
   // onClickDes enent method
   onClickTodoDes = (e) => {
     // target.outerHTML = document.createElement('textarea');
-    const parent = e.target.parentElement;
+    const parent = e.target.parentElement.parentElement;
+    const getTotodes = parent.querySelector('.todo-des').innerText;
     parent.innerHTML = '';
 
     // todo checkbox
@@ -158,10 +178,14 @@ export default class Todos {
     checkbox.setAttribute('type', 'checkbox');
     checkbox.id = 'todo-compleate';
 
+    checkbox.addEventListener('change', (e) => {
+      this.onCompleate(e);
+    });
+
     // todo description
     const todoEditInput = document.createElement('input');
     todoEditInput.setAttribute('type', 'text');
-    todoEditInput.setAttribute('value', e.target.innerText);
+    todoEditInput.setAttribute('value', getTotodes);
     todoEditInput.className = 'todo-edit-input';
 
     // Add event on keypress in the textarea
@@ -188,5 +212,23 @@ export default class Todos {
     });
 
     parent.append(checkbox, todoEditInput, deleteTodo);
+  }
+
+  onCompleate = (e) => {
+    const index = e.target.parentElement.id;
+    const newArr = [...this.todos];
+    const indx = newArr.findIndex((item) => index === item.index.toString());
+    if (indx >= 0) {
+      newArr[indx].completed = !newArr[indx].completed;
+    }
+    this.todos = [...newArr];
+    this.render();
+  }
+
+  onFilterCompletedTodos = () => {
+    let newArr = [...this.todos];
+    newArr = newArr.filter((item) => item.completed !== true);
+    this.todos = [...newArr];
+    this.render();
   }
 }
