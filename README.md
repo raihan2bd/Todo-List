@@ -71,7 +71,7 @@
 > <img align="center" src="project_demo.PNG" alt="logo" width="100%"  height="auto" />
   <br/>
 
-- [Live Demo Link](https://raihan2bd.github.io/Todo-List/dist)
+- [Live Demo Link](https://raihan2bd.github.io/Todo-List/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
