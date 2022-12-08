@@ -40,6 +40,8 @@ export default class Todos {
   // Render todo list
   render = () => {
     todoContainer.innerHTML = '';
+    showMsg.innerText = '';
+    showMsg.classList.remove('form-error');
     this.sortAndSave();
     if (this.todos.length > 0) {
       this.todos.forEach((todo) => {
@@ -118,6 +120,33 @@ export default class Todos {
     this.render();
   }
 
+  // edit todo
+  edit = (e) => {
+    const { value } = e.target;
+
+    // validate form
+    const required = true;
+    const minLength = 3;
+    const maxLength = 255;
+    const specialChar = false;
+    const isValid = validateForm(value, required, minLength, maxLength, specialChar);
+    if (isValid.isError === true && isValid.msg.length > 0) {
+      showMsg.classList.add('form-error');
+      showMsg.textContent = isValid.msg;
+      e.target.classList.add('invalid-edit');
+    } else {
+      e.target.classList.remove('invalid-edit');
+      const index = e.target.parentElement.id;
+      const newArr = [...this.todos];
+      const indx = newArr.findIndex((item) => index === item.index.toString());
+      if (indx >= 0) {
+        newArr[indx].description = value;
+      }
+      this.todos = [...newArr];
+      this.render();
+    }
+  }
+
   // onClickDes enent method
   onClickTodoDes = (e) => {
     // target.outerHTML = document.createElement('textarea');
@@ -130,10 +159,22 @@ export default class Todos {
     checkbox.id = 'todo-compleate';
 
     // todo description
-    const todoTxtArea = document.createElement('textarea');
-    todoTxtArea.setAttribute('row', '1');
-    todoTxtArea.className = 'todo-textarea';
-    todoTxtArea.innerText = e.target.innerText;
+    const todoEditInput = document.createElement('input');
+    todoEditInput.setAttribute('type', 'text');
+    todoEditInput.setAttribute('value', e.target.innerText);
+    todoEditInput.className = 'todo-edit-input';
+
+    // Add event on keypress in the textarea
+    todoEditInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        this.edit(e);
+      } else {
+        showMsg.classList.remove('form-error');
+        showMsg.innerText = '';
+        e.target.classList.remove('invalid-edit');
+      }
+    });
 
     // todo Delete dot button
     const deleteTodo = document.createElement('button');
@@ -146,6 +187,6 @@ export default class Todos {
       this.delete(index);
     });
 
-    parent.append(checkbox, todoTxtArea, deleteTodo);
+    parent.append(checkbox, todoEditInput, deleteTodo);
   }
 }

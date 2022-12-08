@@ -165,17 +165,10 @@ body {
 .form-error {
   display: block;
   color: #f55;
+  text-align: center;
 }
 
-.invalid {
-  color: #f00;
-}
-
-.invalid:focus-visible {
-  outline-color: #f00;
-}
-
-.todo-textarea {
+.todo-edit-input {
   flex: 1;
   width: 100%;
   background: transparent;
@@ -186,7 +179,6 @@ body {
   border: 1px solid #de8cff;
   border-radius: 8px;
   max-height: 40px;
-  resize: none;
 }
 
 .btn-delete {
@@ -197,4 +189,13 @@ body {
 
 .btn-delete:active {
   border-color: #de8cff;
+}
+
+.invalid-edit {
+  color: #f55;
+  border-color: #f55;
+}
+
+.invalid-edit:focus-visible {
+  outline-color: #f55;
 }
