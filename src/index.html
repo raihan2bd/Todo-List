@@ -11,8 +11,9 @@
   <main class="container">
     <section class="todo-section">
       <h1 class="todo-title">Today's Todo</h1>
+      <label for="description" class="show-msg"></label>
       <form id="todo-form">
-        <input type="text" required min="5" max="255" placeholder="Add todo list here ..." name="description" id="description" class="input-group">
+        <input type="text" autocomplete="off" required min="5" max="255" placeholder="Add todo list here ..." name="description" id="description" class="input-group">
        <button type="submit" class="btn-submit"></button>
       </form>
       <ul class="todo-items-gropu">

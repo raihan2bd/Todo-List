@@ -1,62 +1,35 @@
 import './style.css';
+import Todos from './modules/todos.js';
+import {
+  formInput, btnSubmit, showMsg,
+} from './modules/domSelector.js';
 
 // Import necessary assets form source
 import enterIcon from './assets/enter-24.png';
-import threeDotIcon from './assets/three-dot-24.png';
 
-class Todos {
-  constructor() {
-    this.todos = [
-      {
-        description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.',
-        completed: false,
-        index: 0,
-      },
-      {
-        description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.',
-        completed: false,
-        index: 1,
-      },
-      {
-        description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.',
-        completed: false,
-        index: 2,
-      },
-    ];
-  }
-
-  sortList = () => {
-    this.todos = this.todos.sort((a, b) => {
-      if (a.index > b.index) {
-        return 1;
-      } if (a.index < b.index) {
-        return -1;
-      }
-      return 0;
-    });
-  }
-
-  render = () => {
-    this.sortList();
-    const todoContainer = document.querySelector('.todo-items-gropu');
-    this.todos.forEach((todo) => {
-      const todoItem = document.createElement('li');
-      todoItem.className = 'todo-item';
-      todoItem.id = todo.index;
-      todoItem.innerHTML = `<input type="checkbox" id="todo-compleate"
-      >
-      <p class="todo-des">
-        ${todo.description}
-      </p>
-      <button class="btn-three-dot"><img src="${threeDotIcon}" alt="..."></button>`;
-
-      todoContainer.appendChild(todoItem);
-    });
-  }
-}
-
+// Initialize the todos
 const todos = new Todos();
 
+// todo submit event using Enter button.
+formInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    todos.onSubmit();
+  } else {
+    showMsg.innerHTML = '';
+    showMsg.classList.remove('form-error');
+    formInput.classList.remove('invalid');
+  }
+});
+
+// todo submit event using submit button
+btnSubmit.addEventListener('click', (e) => {
+  e.preventDefault();
+  todos.onSubmit();
+  formInput.value = '';
+});
+
+// Load the todo list on the fly.
 window.onload = () => {
   todos.render();
   document.querySelector('.btn-submit').innerHTML = `<img src='${enterIcon}' alt='submit'/>`;
