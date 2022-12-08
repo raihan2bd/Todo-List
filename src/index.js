@@ -1,7 +1,7 @@
 import './style.css';
 import Todos from './modules/todos.js';
 import {
-  formInput, btnSubmit, showMsg,
+  formInput, btnSubmit, showMsg, filterButton,
 } from './modules/domSelector.js';
 
 // Import necessary assets form source
@@ -28,6 +28,11 @@ btnSubmit.addEventListener('click', (e) => {
   todos.onSubmit();
   formInput.value = '';
 });
+
+// filter all completed list;
+filterButton.addEventListener('click', ( ) => {
+  todos.onFilterCompletedTodos();
+})
 
 // Load the todo list on the fly.
 window.onload = () => {

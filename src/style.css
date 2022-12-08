@@ -114,7 +114,7 @@ body {
   width: 100%;
   display: flex;
   padding: 15px;
-  cursor: pointer;
+  cursor: move;
   column-gap: 10px;
   align-items: center;
 }
@@ -128,6 +128,10 @@ body {
   color: #de8cff;
 }
 
+#todo-compleate {
+  cursor: pointer;
+}
+
 .todo-des {
   flex: 1;
 }
@@ -135,7 +139,7 @@ body {
 .btn-three-dot {
   background: inherit;
   border: none;
-  cursor: move;
+  cursor: pointer;
 }
 
 .btn-clear-all {
@@ -198,4 +202,9 @@ body {
 
 .invalid-edit:focus-visible {
   outline-color: #f55;
+}
+
+.todo-compleated {
+  text-decoration: line-through;
+  color: #de8cff;
 }
