@@ -20,7 +20,8 @@ export default class Todos {
     todoArr.sort((a, b) => {
       if (a.index > b.index) {
         return 1;
-      } if (a.index < b.index) {
+      }
+      if (a.index < b.index) {
         return -1;
       }
       return 0;
@@ -35,7 +36,7 @@ export default class Todos {
 
     this.todos = [...todoArr];
     localStorage.setItem('todos', JSON.stringify(this.todos));
-  }
+  };
 
   // Render todo list
   render = () => {
@@ -45,7 +46,7 @@ export default class Todos {
     this.sortAndSave();
     if (this.todos.length > 0) {
       this.todos.forEach((todo) => {
-      // create todo item
+        // create todo item
         const todoItem = document.createElement('li');
         todoItem.id = todo.index;
         todoItem.className = 'todo-item';
@@ -58,6 +59,23 @@ export default class Todos {
 
         todoItem.addEventListener('dragend', () => {
           todoItem.classList.remove('dragging');
+          const todoItemsAfterDrag = todoContainer.querySelectorAll('.todo-item');
+          const newTodos = [];
+          todoItemsAfterDrag.forEach((item) => {
+            const id = item.getAttribute('id');
+            const finditem = this.todos.find((t) => t.index === +id);
+            if (finditem) {
+              newTodos.push(finditem);
+            }
+          });
+          // rearrange the index
+          let index = 0;
+          newTodos.forEach((todo) => {
+            index += 1;
+            todo.index = index;
+          });
+          this.todos = newTodos;
+          this.render();
         });
 
         // todo checkbox
@@ -98,7 +116,7 @@ export default class Todos {
     } else {
       todoContainer.innerHTML = '<p class="no-item">There is no todo to show! Please add a new one.</p>';
     }
-  }
+  };
 
   // onSubmit method
   onSubmit = () => {
@@ -108,7 +126,13 @@ export default class Todos {
     const minLength = 3;
     const maxLength = 255;
     const specialChar = false;
-    const isValid = validateForm(description, required, minLength, maxLength, specialChar);
+    const isValid = validateForm(
+      description,
+      required,
+      minLength,
+      maxLength,
+      specialChar,
+    );
 
     // Check if form has error or not
 
@@ -132,12 +156,12 @@ export default class Todos {
       // render the new todos on the dom
       this.render();
     }
-  }
+  };
 
   delete = (index) => {
     this.todos = this.todos.filter((t) => t.index.toString() !== index);
     this.render();
-  }
+  };
 
   // edit todo
   edit = (e) => {
@@ -148,7 +172,13 @@ export default class Todos {
     const minLength = 3;
     const maxLength = 255;
     const specialChar = false;
-    const isValid = validateForm(value, required, minLength, maxLength, specialChar);
+    const isValid = validateForm(
+      value,
+      required,
+      minLength,
+      maxLength,
+      specialChar,
+    );
     if (isValid.isError === true && isValid.msg.length > 0) {
       showMsg.classList.add('form-error');
       showMsg.textContent = isValid.msg;
@@ -164,7 +194,7 @@ export default class Todos {
       this.todos = [...newArr];
       this.render();
     }
-  }
+  };
 
   // onClickDes enent method
   onClickTodoDes = (e) => {
@@ -212,7 +242,7 @@ export default class Todos {
     });
 
     parent.append(checkbox, todoEditInput, deleteTodo);
-  }
+  };
 
   onCompleate = (e) => {
     const index = e.target.parentElement.id;
@@ -223,12 +253,12 @@ export default class Todos {
     }
     this.todos = [...newArr];
     this.render();
-  }
+  };
 
   onFilterCompletedTodos = () => {
     let newArr = [...this.todos];
     newArr = newArr.filter((item) => item.completed !== true);
     this.todos = [...newArr];
     this.render();
-  }
+  };
 }

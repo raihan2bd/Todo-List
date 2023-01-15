@@ -1,7 +1,11 @@
 import './style.css';
 import Todos from './modules/todos.js';
 import {
-  formInput, btnSubmit, showMsg, filterButton, todoContainer,
+  formInput,
+  btnSubmit,
+  showMsg,
+  filterButton,
+  todoContainer,
 } from './modules/domSelector.js';
 
 // Import necessary assets form source
@@ -50,5 +54,7 @@ todoContainer.addEventListener('dragover', (e) => {
 // Load the todo list on the fly.
 window.onload = () => {
   todos.render();
-  document.querySelector('.btn-submit').innerHTML = `<img src='${enterIcon}' alt='submit'/>`;
+  document.querySelector(
+    '.btn-submit',
+  ).innerHTML = `<img src='${enterIcon}' alt='submit'/>`;
 };

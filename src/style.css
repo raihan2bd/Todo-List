@@ -24,7 +24,7 @@ body {
 
 /* Todo Section start from here */
 .container {
-  background: #470255;
+  background: #640377;
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -70,7 +70,7 @@ body {
   width: 50px;
   display: block;
   margin: 10px auto;
-  border-bottom: 2px solid #470255;
+  border-bottom: 2px solid #a60ae4;
 }
 
 /* Add new todo form start form here */
@@ -132,7 +132,7 @@ body {
 }
 
 .todo-item:nth-child(odd) {
-  background: #7a0492;
+  background: #9304af;
 }
 
 .todo-completed {
